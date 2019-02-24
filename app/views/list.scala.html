@@ -1,0 +1,176 @@
+@(ids: List[String], longitudes: List[String], latitudes: List[String], images: List[String])
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>SB Admin - Start Bootstrap Template</title>
+  <!-- Bootstrap core CSS
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
+  <link href=@routes.Assets.versioned("vendor/bootstrap/css/bootstrap.min.css") rel="stylesheet">
+  <!-- Custom fonts for this template
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">-->
+  <link href=@routes.Assets.versioned("vendor/font-awesome/css/font-awesome.min.css") rel="stylesheet">
+  <!-- Custom styles for this template
+  <link href="css/sb-admin.css" rel="stylesheet">-->
+  <link href=@routes.Assets.versioned("stylesheets/sb-admin.css") rel="stylesheet">
+
+</head>
+
+<body class="fixed-nav sticky-footer bg-info" id="page-top">
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top" id="mainNav">
+    <a class="navbar-brand" href="index.html">UAV System</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse bg-info" id="navbarResponsive">
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+          <a class="nav-link" href="@routes.AppController.list()">
+            <i class="fa fa-fw fa-dashboard"></i>
+            <span class="nav-link-text">Lists</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link" href="@routes.AppController.maps()">
+            <i class="fa fa-fw fa-area-chart"></i>
+            <span class="nav-link-text">Map</span>
+          </a>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="content-wrapper bg-dark">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">List View</li>
+        <li class="breadcrumb-item">
+              <a href="@routes.AppController.maps()">Map View</a>
+          </li>
+      </ol>
+        <style>
+div.list-group {
+    height: 400px;
+    overflow-y: scroll;
+    }</style>
+     <div class="row">
+        <div class="col-lg-6">
+
+                <div class="card-header text-xl-center text-white bg-info font-weight-bold border-bottom">
+                    Survivor List
+                </div>
+            <div class="list-group">
+                @for(i<-0 until images.length){
+                    <div class="card">
+                <button type="button" class="list-group-item list-group-item-action list-group-item-info text-dark font-weight-bold text-xl-left" id="@i" onclick="showImage('@ids(i)')">Survivor @i
+                    <span class="pull-right">
+                        <span class="btn-group btn-group-sm" data-toggle="buttons" onclick="event.stopPropagation();" style="display: inline;">
+                            <label class="btn btn-danger active font-italic">
+                                <input type="radio" name="options@i" id="option1@i" autocomplete="off" checked> Detected
+                            </label>
+                            <label class="btn btn-warning font-italic">
+                                <input type="radio" name="options@i" id="option2@i" autocomplete="off"> Pending
+                            </label>
+                            <label class="btn btn-success font-italic">
+                                <input type="radio" name="options@i" id="option3@i" autocomplete="off"> Rescued
+                            </label>
+                        </span>
+                    </span>
+                </button>
+                    </div>
+                }
+
+
+            </div>
+            </div>
+
+        <div class="col-lg-6">
+
+
+            @for(i<-0 until images.length) {
+                <div id="@ids(i)"style="display: none;">
+                <div class="card-header text-xl-center text-white bg-info font-weight-bold">
+                    Survivor @i
+                </div>
+                <div class="card text-center bg-info mb-3 ">
+
+                    <img class="card-img-top" src="@images(i)" height="350" width="525" style="display: block;" class="rounded" />
+                     <div class="card-footer">
+                      <div class="card-text font-weight-bold text-white">Latitude: @latitudes(i) | Longitude: @longitudes(i)</div>
+                     </div>
+                </div>
+
+                </div>
+
+            }
+
+        </div>
+      </div>
+    </div>
+
+      <script type="text/javascript">
+        var num_survivors=@ids.length;
+        var imageID="";
+
+    function showImage(id){
+        console.log("ID: "+id);
+        @for(i<-0 until ids.length){
+            imageID='@ids(i)';
+            console.log("imageID:" + imageID);
+            document.getElementById(imageID).style.display="none";
+        }
+        var x = document.getElementById(id);
+         if (x.style.display == "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+        //document.getElementById(id).style.visibility="visible";
+    }
+    </script>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small>Copyright © Senior Design UAV System to rescue survivors of natural disasters 2018</small>
+        </div>
+      </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript
+    <script src="vendor/jquery/jquery.min.js"></script>-->
+    <script src=@routes.Assets.versioned("vendor/jquery/jquery.min.js")></script>
+    <!--
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    -->
+    <script src=@routes.Assets.versioned("vendor/bootstrap/js/bootstrap.bundle.min.js")></script>
+    <!-- Core plugin JavaScript
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    -->
+    <script src=@routes.Assets.versioned("vendor/jquery-easing/jquery.easing.min.js")></script>
+    <!-- Custom scripts for all pages
+    <script src="js/sb-admin.min.js"></script>-->
+    <script src=@routes.Assets.versioned("javascripts/sb-admin.min.js")></script>
+  </div>
+</body>
+
+</html>
