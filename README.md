@@ -1,4 +1,4 @@
-## Search and Rescue Web App
+# Search and Rescue Web App
 This repository contains code for our web application we developed for senior design. 
 
 The web application consists of two main views for first responders to use: the list view and the maps view. The application was developed using the Play framework in Javascript and HTML. We utilized a Bootstrap template to create a front-end “skin” for the application, and then added to that to create the list and map views.
@@ -8,3 +8,7 @@ The first step in rendering the correct data on the web application was to calcu
 The list view consists of a list of survivors detected by the YOLO algorithm. When a first responder clicks on a survivor, a popup will appear with an image of the survivor with a box around them, and their GPS coordinates, which were calculated using the location algorithm. We stored this information using MongoDB. First, we took the bounded box image from YOLO and uploaded it to AWS, which returned a URL to the image. We packaged this URL with the location calculation and uploaded this as a package to MongoDB. The list view is shown below.
 
 ![alt text](https://github.com/varunsridhar1/SearchAndRescueWebApp/blob/master/ListView.png "List view")
+
+For the map view, we displayed a map on the page through the MapBox GL Javascript library. The map is centered around where the drone flew in that particular run. On the map, we posted markers at the calculated locations of each of the survivors identified in YOLO. When a first responder clicks on one of the markers, they will see a similar popup to the one described above, containing an image of the survivor from the drone footage and their GPS coordinates. The map view page is displayed below.
+
+![alt text](https://github.com/varunsridhar1/SearchAndRescueWebApp/blob/master/MapView.png "Map view")
